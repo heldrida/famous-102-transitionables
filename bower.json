@@ -1,0 +1,32 @@
+{
+  "name": "famous-102-transitionables",
+  "description": "How to create animations using a different method. in this method, we're going to store states in transitionable objects which can then be shared across multiple stateless modfiers.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/heldrida/famous-102-transitionables",
+  "authors": [{
+    "name": "",
+    "url": "http://github.com/heldrida/"
+  }],
+  "main": "app/index.html",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "famo.us"
+  ],
+  "license": "ISC",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "src/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.11",
+    "almond": "~0.2.9",
+    "famous-polyfills": "git+https://github.com/Famous/polyfills.git#0.1.1",
+    "famous": "~0.2.2"
+  }
+}
