@@ -5,10 +5,13 @@ define(function(require, exports, module) {
     var Engine = require('famous/core/Engine');
     var Surface = require('famous/core/Surface');
     var Transform = require('famous/core/Transform');
-    var StateModifier = require('famous/modifiers/StateModifier');
+    var Modifier = require('famous/core/Modifier');
     var Easing = require('famous/transitions/Easing');
+    var Transitionable = require('famous/transitions/Transitionable');
 
     var mainContext = Engine.createContext();
+
+    var transitionable = new Transitionable(0);
 
     var surface = new Surface({
         properties: {
@@ -16,26 +19,25 @@ define(function(require, exports, module) {
         }
     });
 
-    var stateModifier = new StateModifier({
+    var modifier = new Modifier({
         size: [200, 200],
         origin: [0.5, 0.5],
         align: [0.5, 0.5],
-        // sets initial x and y scale to be 0
-        transform: Transform.scale(0, 0, 1),
-        // sets initial opacity to 0
-        opacity: 0
+        transform: function () {
+            // cache value of transitionable.get()
+            var scale = transitionable.get();
+            return Transform.scale(scale, scale, 1);
+        },
+        opacity: function () {
+            return transitionable.get();
+        }
     });
 
-    mainContext.add(stateModifier).add(surface);
+    mainContext.add(modifier).add(surface);
 
-    // animates x and y scales to 1
-    stateModifier.setTransform(
-        Transform.scale(1, 1, 1),
-        { duration: 2000, curve: Easing.outBacl }
-    );
-
-    // animates opacity to 1
-    stateModifier.setOpacity(1, {
+    // transitioning he transitionable from 0 to 1
+    // with the transition definition
+    transitionable.set(1, {
         duration: 2000,
         curve: Easing.outBack
     });
